@@ -23,6 +23,7 @@ h2 {
 main {
     display: flex;
     flex-direction: row;
+    /* justify-content: space-between; */
     padding: 1%;
 }
 
@@ -42,8 +43,15 @@ aside {
     flex-direction: column;
 }
 
-.five-day-column {
+.five-day-forecast {
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+}
+
+.days {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
