@@ -1,0 +1,16 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-image: linear-gradient(to right, rgb(96, 143, 243), rgb(60, 12, 136));
+}
+
+h1 {
+    font-size: 2rem;
+    color:white;
+}
