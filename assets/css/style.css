@@ -24,15 +24,12 @@ aside {
     margin-right: 2%;
 }
 
-input, button {
+input, hr, .city {
     margin-bottom: 5%;
 }
 
 /* Adding visual divider after Search button */
 hr {
-    border-top: 3px solid black;
-    border-radius: 3px;
-    margin-bottom: 7%;
     width: 100%;
 }
 
@@ -122,11 +119,12 @@ p {
 }
 
 .city {
-    background-color: rgb(189, 189, 189);
+    background-color: #bdbdbd;
 }
 
 #search {
     background-color: rgb(118, 190, 248);
+    margin-bottom: 3%;
     color: white;
 }
 
