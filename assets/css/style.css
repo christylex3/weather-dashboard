@@ -7,7 +7,7 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    background-image: linear-gradient(to right, rgb(96, 143, 243), rgb(60, 12, 136));
+    background-image: linear-gradient(to right, #608ff3, #3c0c88);
 }
 
 main {
@@ -50,16 +50,22 @@ h1 {
 
 h2 {
     font-size: 2rem;
-    margin: 0;
+    margin-top: 0;
+    margin-bottom: 1%;
 }
 
 h3 {
     font-size: 1.5rem;
+    margin-bottom: 1%;
 }
 
 h4 {
     font-size: 1.3rem;
     margin: 0;
+}
+
+p {
+    font-size: 1.1rem;
 }
 
 .forecast {
@@ -75,6 +81,10 @@ h4 {
     padding: 1%;
 }
 
+.day-forecast > p {
+    margin: 1%;
+}
+
 .five-day-forecast {
     display: flex;
     flex-direction: column;
@@ -86,6 +96,14 @@ h4 {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+
+.days > article {
+    background-color: #2b3a67;
+    flex-basis: 16%;
+    padding: 1%;
+    margin-bottom: 1%;
+    color: white;
 }
 
 .city {
