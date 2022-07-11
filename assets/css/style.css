@@ -10,26 +10,34 @@ header {
     background-image: linear-gradient(to right, rgb(96, 143, 243), rgb(60, 12, 136));
 }
 
+main {
+    display: flex;
+    flex-direction: row;
+    padding: 1%;
+}
+
+/* city-search */
+aside {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 30%;
+    padding-right: 2%;
+}
+
+/* Adding visual divider after Serach button */
+hr {
+    border-top: 3px solid black;
+    border-radius: 3px;
+    width: 100%;
+}
+
 h1 {
-    font-family: Arial, Helvetica, sans-serif;
     font-size: 2rem;
     color:white;
 }
 
 h2 {
     margin: 0;
-}
-
-main {
-    display: flex;
-    flex-direction: row;
-    /* justify-content: space-between; */
-    padding: 1%;
-}
-
-aside {
-    display: flex;
-    flex-direction: column;
 }
 
 .forecast {
