@@ -31,16 +31,6 @@ hr {
     width: 100%;
 }
 
-h1 {
-    font-size: 2.5rem;
-    color:white;
-}
-
-h2 {
-    font-size: 2rem;
-    margin: 0;
-}
-
 input {
     line-height: 2.5rem;
     font-size: 1.5rem;
@@ -53,6 +43,25 @@ button {
     border: none;
 }
 
+h1 {
+    font-size: 2.5rem;
+    color:white;
+}
+
+h2 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+h4 {
+    font-size: 1.3rem;
+    margin: 0;
+}
+
 .forecast {
     display: flex;
     flex-direction: column;
@@ -62,6 +71,8 @@ button {
 .day-forecast {
     display: flex;
     flex-direction: column;
+    border: 2px solid black;
+    padding: 1%;
 }
 
 .five-day-forecast {
