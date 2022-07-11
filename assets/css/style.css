@@ -16,15 +16,15 @@ main {
     padding: 1%;
 }
 
-/* city-search */
+/* city-search section */
 aside {
     display: flex;
     flex-direction: column;
     flex-basis: 30%;
-    padding-right: 2%;
+    margin-right: 2%;
 }
 
-/* Adding visual divider after Serach button */
+/* Adding visual divider after Search button */
 hr {
     border-top: 3px solid black;
     border-radius: 3px;
