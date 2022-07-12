@@ -10,9 +10,25 @@ var APIKey = "7d7fd26e34daa0f33590c9e7ba3f4a3f";
 var searchBtn = $("#search");
 var city;
 
+// Grabs the value from the input when search button is clicked
 searchBtn.on("click", function() {
     city = $("#city-input").val();
+    checkInput(city);
 })
+
+
+// Checks if the user enters an invalid input
+function checkInput(city) {
+    if (!isNaN(city)) {
+        return;
+    } else {
+        getWeather(city);
+    }
+}
+
+function getWeather (city) {
+    console.log("Inside of getWeather");
+}
 
 
 
