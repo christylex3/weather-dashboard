@@ -12,6 +12,11 @@ var searchBtn = $("#search");
 var city;
 var latitude;
 var longitude;
+var currentTemp;
+var currentWind;
+var currentHumidity;
+var currentUVIndex;
+var currentWeatherIcon;
 
 // Grabs the value from the input when search button is clicked
 searchBtn.on("click", function() {
@@ -35,6 +40,7 @@ function getWeather () {
 }
 
 function getCoords () {
+    // TODO: Make a for-loop to loop through
     var cityCoordsRequest = coordinatesRequest + city + "&limit=1&appid=" + APIKey;
     getLatLong(cityCoordsRequest);
 }
@@ -50,12 +56,28 @@ function getLatLong(requestURL) {
 }
 
 function getWeatherForecast () {
-    var forecastRequest = weatherRequest + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&appid=" + APIKey; 
+    var forecastRequest = weatherRequest + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + APIKey; 
     getDaysForecast(forecastRequest);
 }
 
-function getDaysForecast (requestURL) {
 
+// API Call to One Call API - grabs weather forecast for current conditions and next days
+function getDaysForecast (requestURL) {
+    fetch(requestURL).then(function(response) {
+        return response.json();
+    }).then(function(data) {
+        console.log(data);
+        currentTime = data.current.dt;
+        currentTemp = data.current.temp;
+        currentWind = data.current.wind_speed;
+        currentHumidity = data.current.humidity;
+        currentUVIndex = data.current.uvi;
+        console.log(currentTime);
+        console.log(currentTemp);
+        console.log(currentWind);
+        console.log(currentHumidity);
+        console.log(currentUVIndex);
+    });
 }
 
 
