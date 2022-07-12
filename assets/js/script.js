@@ -50,6 +50,11 @@ function getLatLong(requestURL) {
 }
 
 function getWeatherForecast () {
+    var forecastRequest = weatherRequest + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&appid=" + APIKey; 
+    getDaysForecast(forecastRequest);
+}
+
+function getDaysForecast (requestURL) {
 
 }
 
