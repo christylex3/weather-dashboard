@@ -25,16 +25,16 @@ function checkInput(city) {
     if (!isNaN(city)) {
         return;
     } else {
-        getWeather(city);
+        getWeather();
     }
 }
 
-function getWeather (city) {
-    getCoords(city);
-    getWeatherForecast(city);
+function getWeather () {
+    getCoords();
+    getWeatherForecast();
 }
 
-function getCoords (city) {
+function getCoords () {
     var cityCoordsRequest = coordinatesRequest + city + "&limit=1&appid=" + APIKey;
     getLatLong(cityCoordsRequest);
 }
@@ -47,6 +47,10 @@ function getLatLong(requestURL) {
         latitude = data[0].lat;
         longitude = data[0].lon;
     });
+}
+
+function getWeatherForecast () {
+
 }
 
 
