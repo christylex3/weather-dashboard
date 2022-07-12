@@ -24,17 +24,19 @@ searchBtn.on("click", function() {
     if (!isNaN(city)) {
         return;
     } else {
-        getWeather();
+        getCurrentWeather();
     }
 });
 
-// How to get rid of the first error of "bad request"
-function getWeather() {
+// How to get rid of the first error of "bad request"?
+function getCurrentWeather() {
     var requestUrl = coordinatesRequest + city + "&limit=1&appid=" + APIKey;
     getCoordinates(requestUrl);
-    requestUrl = weatherRequest + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + APIKey; 
-    getDaysForecast(requestUrl);
 }
+
+// function displayCurrentWeather() {
+
+// }
 
 
 // API call to Geocoding - grabs city's latitude and longitude
@@ -44,6 +46,8 @@ function getCoordinates(requestURL) {
     }).then(function(data) {
         latitude = data[0].lat;
         longitude = data[0].lon;
+        var requestUrl = weatherRequest + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + APIKey; 
+        getDaysForecast(requestUrl);
     });
 }
 
@@ -59,6 +63,7 @@ function getDaysForecast (requestURL) {
         currentWind = data.current.wind_speed;
         currentHumidity = data.current.humidity;
         currentUVIndex = data.current.uvi;
+        // displayCurrentWeather();
     });
 }
 
