@@ -8,6 +8,11 @@ var weatherRequest = "https://api.openweathermap.org/data/2.5/onecall?lat=";
 const APIKey = "7d7fd26e34daa0f33590c9e7ba3f4a3f";
 
 var searchBtn = $("#search");
+var currCity = $("#current-city");
+var currTemp = $("#current-temp");
+var currWind = $("#current-wind");
+var currHumidity = $("#current-humidity");
+var currUVIndex = $("#current-uv");
 
 var city;
 var latitude;
@@ -34,9 +39,13 @@ function getCurrentWeather() {
     getCoordinates(requestUrl);
 }
 
-// function displayCurrentWeather() {
-
-// }
+function displayCurrentWeather() {
+    currCity.text(city); // need to add date and icon *****************************************
+    currTemp.text("Temp: " + currentTemp + "°F");
+    currWind.text("Wind: " + currentWind);
+    currHumidity.text("Humidity: " + currentHumidity + "%");
+    currUVIndex.text(currentUVIndex);
+}
 
 
 // API call to Geocoding - grabs city's latitude and longitude
@@ -47,12 +56,12 @@ function getCoordinates(requestURL) {
         latitude = data[0].lat;
         longitude = data[0].lon;
         var requestUrl = weatherRequest + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + APIKey; 
-        getDaysForecast(requestUrl);
+        getDayForecast(requestUrl);
     });
 }
 
-// API Call to One Call API - grabs weather forecast for current conditions and next days
-function getDaysForecast (requestURL) {
+// API Call to One Call API - grabs weather forecast for current day
+function getDayForecast (requestURL) {
     fetch(requestURL).then(function(response) {
         return response.json();
     }).then(function(data) {
@@ -63,7 +72,7 @@ function getDaysForecast (requestURL) {
         currentWind = data.current.wind_speed;
         currentHumidity = data.current.humidity;
         currentUVIndex = data.current.uvi;
-        // displayCurrentWeather();
+        displayCurrentWeather();
     });
 }
 
