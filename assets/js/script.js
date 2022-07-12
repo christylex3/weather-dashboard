@@ -21,32 +21,24 @@ var currentWeatherIcon;
 // Grabs the value from the input when search button is clicked
 searchBtn.on("click", function() {
     city = $("#city-input").val();
-    checkInput(city);
-});
-
-
-// Checks if the user enters an invalid input
-function checkInput(city) {
     if (!isNaN(city)) {
         return;
     } else {
         getWeather();
     }
+});
+
+// How to get rid of the first error of "bad request"
+function getWeather() {
+    var requestUrl = coordinatesRequest + city + "&limit=1&appid=" + APIKey;
+    getCoordinates(requestUrl);
+    requestUrl = weatherRequest + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + APIKey; 
+    getDaysForecast(requestUrl);
 }
 
-function getWeather () {
-    getCoords();
-    getWeatherForecast();
-}
-
-function getCoords () {
-    // TODO: Make a for-loop to loop through
-    var cityCoordsRequest = coordinatesRequest + city + "&limit=1&appid=" + APIKey;
-    getLatLong(cityCoordsRequest);
-}
 
 // API call to Geocoding - grabs city's latitude and longitude
-function getLatLong(requestURL) {
+function getCoordinates(requestURL) {
     fetch(requestURL).then(function(response) {
         return response.json();
     }).then(function(data) {
@@ -55,12 +47,6 @@ function getLatLong(requestURL) {
     });
 }
 
-function getWeatherForecast () {
-    var forecastRequest = weatherRequest + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + APIKey; 
-    getDaysForecast(forecastRequest);
-}
-
-
 // API Call to One Call API - grabs weather forecast for current conditions and next days
 function getDaysForecast (requestURL) {
     fetch(requestURL).then(function(response) {
@@ -68,15 +54,11 @@ function getDaysForecast (requestURL) {
     }).then(function(data) {
         console.log(data);
         currentTime = data.current.dt;
+        currentIcon = data.current.weather[0].icon;
         currentTemp = data.current.temp;
         currentWind = data.current.wind_speed;
         currentHumidity = data.current.humidity;
         currentUVIndex = data.current.uvi;
-        console.log(currentTime);
-        console.log(currentTemp);
-        console.log(currentWind);
-        console.log(currentHumidity);
-        console.log(currentUVIndex);
     });
 }
 
