@@ -1,8 +1,8 @@
-// OpenWeather API
-var weatherRequest = "https://api.openweathermap.org/data/2.5/weather?q=";
-
 // Geocoding API
 var coordinatesRequest = "http://api.openweathermap.org/geo/1.0/direct?q=";
+
+// One Call API
+var weatherRequest = "https://api.openweathermap.org/data/2.5/onecall?lat=";
 
 // API Key for both APIs
 const APIKey = "7d7fd26e34daa0f33590c9e7ba3f4a3f";
@@ -31,7 +31,7 @@ function checkInput(city) {
 
 function getWeather (city) {
     getCoords(city);
-    getCurrentWeather(city);
+    getWeatherForecast(city);
 }
 
 function getCoords (city) {
