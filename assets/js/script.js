@@ -4,9 +4,6 @@ var coordinatesRequest = "http://api.openweathermap.org/geo/1.0/direct?q=";
 // One Call API
 var weatherRequest = "https://api.openweathermap.org/data/2.5/onecall?lat=";
 
-// Daily Forecast 16 Days
-// var forecastRequest = "https://api.openweathermap.org/data/2.5/forecast/daily?lat=";
-
 // API Key for both APIs
 const APIKey = "7d7fd26e34daa0f33590c9e7ba3f4a3f";
 
@@ -16,6 +13,8 @@ var currTemp = $("#current-temp");
 var currWind = $("#current-wind");
 var currHumidity = $("#current-humidity");
 var currUVIndex = $("#current-uv");
+var previousSearch = $(".city-search");
+var dayCard = $(".days");
 
 var city;
 var latitude;
@@ -32,12 +31,29 @@ searchBtn.on("click", function() {
     if (!isNaN(city)) {
         return;
     } else {
+        savePreviousCity();
         getCurrentWeather();
-        // get5DaysForecast();
     }
 });
 
-// How to get rid of the first error of "bad request"?
+
+console.log(previousSearch);
+console.log(previousSearch[0].children);
+console.log(previousSearch[0].children[4]);
+
+function savePreviousCity() {
+    // if (previousSearch[0].children.length < 12) {
+        // create the button and add it under the "city-search"
+        var previousCity = $("<button>");
+        previousCity.text(city);
+        previousSearch.append(previousCity);
+
+    // } else {
+
+    // }
+}
+
+// 
 function getCurrentWeather() {
     var requestUrl = coordinatesRequest + city + "&limit=1&appid=" + APIKey;
     getCoordinates(requestUrl);
@@ -55,15 +71,7 @@ function getCoordinates(requestURL) {
     });
 }
 
-// var testArticle = $(".days");
-// console.log(testArticle);
-// console.log(testArticle[0].children[0]); // article
-// console.log(testArticle[0].children[0].children[0]); // h4
-var dayCard = $(".days");
-    // dayCard[0].children[0].children[2].text("Temp: " + daysForecast[0].day.temp);
-    // console.log(daysForecast[0].day.temp);
-
-
+// Displays the current forecast and the 5-Days forecast
 function displayForecast(daysForecast) {
     var date = new Date();
     currCity.text(city + " (" + date.toLocaleDateString(currentTime) + ")"); // need to add date and icon *****************************************
@@ -72,35 +80,40 @@ function displayForecast(daysForecast) {
     currHumidity.text("Humidity: " + currentHumidity + "%");
     currUVIndex.text(currentUVIndex);
 
-    // make a for-loop to loop the weather cards
+    // Loops through children element of the article and sets the children's element 
+    for (let i = 0; i < 5; i++) {
+        dayCard[0].children[i].children[2].textContent = "Temp: " + daysForecast[i].temp + "°F";
+        dayCard[0].children[i].children[3].textContent = "Wind: " + daysForecast[i].wind + " MPH";
+        dayCard[0].children[i].children[4].textContent = "Humidity: " + daysForecast[i].humidity + "%";
+    }
+
+    // var testArticle = $(".days");
+    // console.log(testArticle);
+    // console.log(testArticle[0].children[0]); // article
+    // console.log(testArticle[0].children[0].children[0]); // h4
 
     // dayCard[0].children[0].children[0].text(); // this is the date
     // dayCard[0].children[0].children[1].text(); // this is the icon
-    dayCard[0].children[0].children[2].textContent = "Temp: " + daysForecast[0].temp + "°F";
-    dayCard[0].children[0].children[3].textContent = "Wind: " + daysForecast[0].wind + " MPH";
-    dayCard[0].children[0].children[4].textContent = "Humidity: " + daysForecast[0].humidity + "%";
 
-    dayCard[0].children[1].children[2].textContent = "Temp: " + daysForecast[1].temp + "°F";
-    dayCard[0].children[1].children[3].textContent = "Wind: " + daysForecast[1].wind + " MPH";
-    dayCard[0].children[1].children[4].textContent = "Humidity: " + daysForecast[1].humidity + "%";
+    // dayCard[0].children[0].children[2].textContent = "Temp: " + daysForecast[0].temp + "°F";
+    // dayCard[0].children[0].children[3].textContent = "Wind: " + daysForecast[0].wind + " MPH";
+    // dayCard[0].children[0].children[4].textContent = "Humidity: " + daysForecast[0].humidity + "%";
 
-    dayCard[0].children[2].children[2].textContent = "Temp: " + daysForecast[2].temp + "°F";
-    dayCard[0].children[2].children[3].textContent = "Wind: " + daysForecast[2].wind + " MPH";
-    dayCard[0].children[2].children[4].textContent = "Humidity: " + daysForecast[2].humidity + "%";
+    // dayCard[0].children[1].children[2].textContent = "Temp: " + daysForecast[1].temp + "°F";
+    // dayCard[0].children[1].children[3].textContent = "Wind: " + daysForecast[1].wind + " MPH";
+    // dayCard[0].children[1].children[4].textContent = "Humidity: " + daysForecast[1].humidity + "%";
 
-    dayCard[0].children[3].children[2].textContent = "Temp: " + daysForecast[3].temp + "°F";
-    dayCard[0].children[3].children[3].textContent = "Wind: " + daysForecast[3].wind + " MPH";
-    dayCard[0].children[3].children[4].textContent = "Humidity: " + daysForecast[3].humidity + "%";
+    // dayCard[0].children[2].children[2].textContent = "Temp: " + daysForecast[2].temp + "°F";
+    // dayCard[0].children[2].children[3].textContent = "Wind: " + daysForecast[2].wind + " MPH";
+    // dayCard[0].children[2].children[4].textContent = "Humidity: " + daysForecast[2].humidity + "%";
 
-    dayCard[0].children[4].children[2].textContent = "Temp: " + daysForecast[4].temp + "°F";
-    dayCard[0].children[4].children[3].textContent = "Wind: " + daysForecast[4].wind + " MPH";
-    dayCard[0].children[4].children[4].textContent = "Humidity: " + daysForecast[4].humidity + "%";
+    // dayCard[0].children[3].children[2].textContent = "Temp: " + daysForecast[3].temp + "°F";
+    // dayCard[0].children[3].children[3].textContent = "Wind: " + daysForecast[3].wind + " MPH";
+    // dayCard[0].children[3].children[4].textContent = "Humidity: " + daysForecast[3].humidity + "%";
 
-    console.log(daysForecast[0].temp);
-
-
-    // for (let i = 0; i < 5; i ++) {
-    // }
+    // dayCard[0].children[4].children[2].textContent = "Temp: " + daysForecast[4].temp + "°F";
+    // dayCard[0].children[4].children[3].textContent = "Wind: " + daysForecast[4].wind + " MPH";
+    // dayCard[0].children[4].children[4].textContent = "Humidity: " + daysForecast[4].humidity + "%";
 
 }
 
