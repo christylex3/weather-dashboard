@@ -55,7 +55,7 @@ function getCoordinates(requestURL) {
     });
 }
 
-function displayForecast() {
+function displayForecast(daysForecast) {
     var date = new Date();
     currCity.text(city + " (" + date.toLocaleDateString(currentTime) + ")"); // need to add date and icon *****************************************
     currTemp.text("Temp: " + currentTemp + "°F");
@@ -64,6 +64,7 @@ function displayForecast() {
     currUVIndex.text(currentUVIndex);
 
     // make a for-loop to loop the weather cards
+    
 
 }
 
@@ -81,20 +82,22 @@ function getForecast (requestUrl) {
         currentUVIndex = data.current.uvi;
 
         // need to make a for-loop to store data
+        var daysForecast = [];
+        for (var i = 0; i < 5; i++) {
+            var day = {
+                time: data.daily[i].dt,
+                icon: data.daily[i].weather[0].icon,
+                temp: data.daily[i].temp.day,
+                wind: data.daily[i].wind_speed,
+                humidity: data.daily[i].humidity,
 
-        day1Time = data.daily[1].dt;
-        day1Icon = data.daily[1].weather[0].icon;
-        day1Temp = data.daily[1].temp;
-        day1Wind = data.daily[1].wind_speed;
-        day1Humidity = data.daily[1].humidity;
+            }
+            console.log(i + " day array: " + JSON.stringify(day));
+            daysForecast.push(day);
+            console.log(i + " daysForecast: " + JSON.stringify(daysForecast));
 
-        day2Time = data.daily[2].dt;
-        day2Icon = data.daily[2].weather[0].icon;
-        day2Temp = data.daily[2].temp;
-        day2Wind = data.daily[2].wind_speed;
-        day2Humidity = data.daily[2].humidity;
-
-        displayForecast();
+        }
+        displayForecast(daysForecast);
     });
 }
 
