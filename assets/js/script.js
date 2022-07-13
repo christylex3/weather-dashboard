@@ -42,15 +42,15 @@ console.log(previousSearch[0].children);
 console.log(previousSearch[0].children[4]);
 
 function savePreviousCity() {
-    // if (previousSearch[0].children.length < 12) {
+    if (previousSearch[0].children.length < 12) {
         // create the button and add it under the "city-search"
         var previousCity = $("<button>");
         previousCity.text(city);
+        previousCity.addClass("city");
         previousSearch.append(previousCity);
-
-    // } else {
-
-    // }
+    } else {
+        
+    }
 }
 
 // 
@@ -71,6 +71,7 @@ function getCoordinates(requestURL) {
     });
 }
 
+
 // Displays the current forecast and the 5-Days forecast
 function displayForecast(daysForecast) {
     var date = new Date();
@@ -80,8 +81,14 @@ function displayForecast(daysForecast) {
     currHumidity.text("Humidity: " + currentHumidity + "%");
     currUVIndex.text(currentUVIndex);
 
+    var iconUrl = "http://openweathermap.org/img/wn/"
+    // console.log(daysForecast[1].weather[0].icon);
+    // console.log(iconUrl + JSON.stringify(daysForecast[1].weather[0].icon) + "@2x.png");
     // Loops through children element of the article and sets the children's element 
     for (let i = 0; i < 5; i++) {
+        console.log(dayCard[0].children[i].children[1]);
+        dayCard[0].children[i].children[1].setAttribute("src", iconUrl + daysForecast[i].icon + ".png");
+        dayCard[0].children[i].children[1].setAttribute("alt", daysForecast[i].iconAlt);
         dayCard[0].children[i].children[2].textContent = "Temp: " + daysForecast[i].temp + "°F";
         dayCard[0].children[i].children[3].textContent = "Wind: " + daysForecast[i].wind + " MPH";
         dayCard[0].children[i].children[4].textContent = "Humidity: " + daysForecast[i].humidity + "%";
@@ -125,6 +132,7 @@ function getForecast (requestUrl) {
         console.log(data);
         currentTime = data.current.dt;
         currentIcon = data.current.weather[0].icon;
+        currentIconAlt = data.current.weather[0].description;
         currentTemp = data.current.temp;
         currentWind = data.current.wind_speed;
         currentHumidity = data.current.humidity;
@@ -136,6 +144,7 @@ function getForecast (requestUrl) {
             var day = {
                 time: data.daily[i].dt,
                 icon: data.daily[i].weather[0].icon,
+                iconAlt: data.daily[i].weather[0].description,
                 temp: data.daily[i].temp.day,
                 wind: data.daily[i].wind_speed,
                 humidity: data.daily[i].humidity,
