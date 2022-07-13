@@ -9,6 +9,7 @@ const APIKey = "7d7fd26e34daa0f33590c9e7ba3f4a3f";
 
 var searchBtn = $("#search");
 var currCity = $("#current-city");
+var currIcon = $("#current-icon");
 var currTemp = $("#current-temp");
 var currWind = $("#current-wind");
 var currHumidity = $("#current-humidity");
@@ -19,6 +20,8 @@ var dayCard = $(".days");
 var city;
 var latitude;
 var longitude;
+var currentIcon;
+var currentIconAlt;
 var currentTemp;
 var currentWind;
 var currentHumidity;
@@ -36,10 +39,9 @@ searchBtn.on("click", function() {
     }
 });
 
-
-console.log(previousSearch);
-console.log(previousSearch[0].children);
-console.log(previousSearch[0].children[4]);
+// console.log(previousSearch);
+// console.log(previousSearch[0].children);
+// console.log(previousSearch[0].children[4]);
 
 function savePreviousCity() {
     if (previousSearch[0].children.length < 12) {
@@ -72,16 +74,34 @@ function getCoordinates(requestURL) {
 }
 
 
+console.log(currIcon);
+
 // Displays the current forecast and the 5-Days forecast
 function displayForecast(daysForecast) {
     var date = new Date();
-    currCity.text(city + " (" + date.toLocaleDateString(currentTime) + ")"); // need to add date and icon *****************************************
+    var iconUrl = "http://openweathermap.org/img/wn/";
+    console.log(currIcon);
+    console.log(currIcon[0].src);
+    console.log(currIcon[0].alt);
+    currIcon[0].src = iconUrl + currentIcon + ".png";
+    currIcon[0].alt = currentIconAlt;
+
+    currCity.text(city + " (" + date.toLocaleDateString(currentTime) + ") " + currIcon); // + iconUrl + currentIcon + ".png)"); // need to add date and icon *****************************************
+    
+    // These below work but pic won't show up
+
+    console.log(currIcon);
+    console.log(currIcon[0].src);
+    console.log(currIcon[0].alt);
+    // currCity[0].children[0].children[0].attributes[0].textContent = iconUrl + currentIcon + ".png";
+    // currCity[0].children[0].children[0].attributes[1].textContent = currentIconAlt;
+    // currCity[0].children[0].children[0].attributes[0].setAttribute("src", iconUrl + currentIcon + ".png");
+    // currCity[0].children[0].children[0].attributes[1].setAttribute("alt", currentIconAlt);
     currTemp.text("Temp: " + currentTemp + "°F");
-    currWind.text("Wind: " + currentWind);
+    currWind.text("Wind: " + currentWind + " MPH");
     currHumidity.text("Humidity: " + currentHumidity + "%");
     currUVIndex.text(currentUVIndex);
 
-    var iconUrl = "http://openweathermap.org/img/wn/"
     // console.log(daysForecast[1].weather[0].icon);
     // console.log(iconUrl + JSON.stringify(daysForecast[1].weather[0].icon) + "@2x.png");
     // Loops through children element of the article and sets the children's element 
