@@ -69,14 +69,11 @@ function getCoordinates(requestURL) {
     });
 }
 
-console.log(currIconElem);
-
-
 // Displays the current forecast and the 5-Days forecast
 function displayForecast(currentWeather, daysForecast) {
     var date = new Date();
 
-    // Displays current forecast
+    // Displays current forecast - city, weather icon and its alt, temp, wind, humidity, and UV index
     currCityElem.text(city + " (" + date.toLocaleDateString(currentWeather.time) + ") ");
     currIconElem[0].attributes[1].textContent = iconUrl + currentWeather.icon + ".png";
     currIconElem[0].attributes[2].textContent = currentWeather.iconAlt;
@@ -95,7 +92,6 @@ function displayForecast(currentWeather, daysForecast) {
         dayCard[0].children[i].children[4].textContent = "Humidity: " + daysForecast[i].humidity + "%";
     }
 
-    console.log(dayCard[0].children[0].children[1]);
     // dayCard[0].children[0].children[2].textContent = "Temp: " + daysForecast[0].temp + "°F";
     // dayCard[0].children[0].children[3].textContent = "Wind: " + daysForecast[0].wind + " MPH";
     // dayCard[0].children[0].children[4].textContent = "Humidity: " + daysForecast[0].humidity + "%";
@@ -147,5 +143,6 @@ function getForecast (requestUrl) {
 // 2) Get city's current weather
 // 3) Get city's 5 Day forecast
 // 4) Print out weather info-related appropriately (Temp, Wind, Humidity, UV Index)
-// 5) Fix UV scale
-// 6) Set up local storage to store previous searches
+// 5) Fix the dates
+// 6) Fix UV scale
+// 7) Set up local storage to store previous searches
