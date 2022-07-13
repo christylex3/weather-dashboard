@@ -57,8 +57,7 @@ button {
 }
 
 label {
-    background-color: #8c07e4;
-    /* background-color: #199b40; */
+    background-color: #199b40;
     border-radius: 5px;
     padding: 0.5% 1.5%;
     color: white;
@@ -137,6 +136,10 @@ p {
     background-color: #56b3ff;
     margin-bottom: 3%;
     color: white;
+}
+
+#city-date-icon {
+    display: flex;
 }
 
 @media screen and (max-width: 1000px) {

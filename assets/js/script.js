@@ -4,6 +4,9 @@ var coordinatesRequest = "http://api.openweathermap.org/geo/1.0/direct?q=";
 // One Call API
 var weatherRequest = "https://api.openweathermap.org/data/2.5/onecall?lat=";
 
+// OpenWeather icon
+var iconUrl = "http://openweathermap.org/img/wn/";
+
 // API Key for both APIs
 const APIKey = "7d7fd26e34daa0f33590c9e7ba3f4a3f";
 
@@ -66,14 +69,17 @@ function getCoordinates(requestURL) {
     });
 }
 
+console.log(currIconElem);
+
+
 // Displays the current forecast and the 5-Days forecast
 function displayForecast(currentWeather, daysForecast) {
     var date = new Date();
-    var iconUrl = "http://openweathermap.org/img/wn/";
 
     // Displays current forecast
-    currCityElem.text(city + " (" + date.toLocaleDateString(currentWeather.time) + ") "); // + iconUrl + currentIcon + ".png)");
-    currIconElem; // add in image
+    currCityElem.text(city + " (" + date.toLocaleDateString(currentWeather.time) + ") ");
+    currIconElem[0].attributes[1].textContent = iconUrl + currentWeather.icon + ".png";
+    currIconElem[0].attributes[2].textContent = currentWeather.iconAlt;
     currTempElem.text("Temp: " + currentWeather.temp + "°F");
     currWindElem.text("Wind: " + currentWeather.wind + " MPH");
     currHumidityElem.text("Humidity: " + currentWeather.humidity + "%");
@@ -89,6 +95,7 @@ function displayForecast(currentWeather, daysForecast) {
         dayCard[0].children[i].children[4].textContent = "Humidity: " + daysForecast[i].humidity + "%";
     }
 
+    console.log(dayCard[0].children[0].children[1]);
     // dayCard[0].children[0].children[2].textContent = "Temp: " + daysForecast[0].temp + "°F";
     // dayCard[0].children[0].children[3].textContent = "Wind: " + daysForecast[0].wind + " MPH";
     // dayCard[0].children[0].children[4].textContent = "Humidity: " + daysForecast[0].humidity + "%";
