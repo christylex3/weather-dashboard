@@ -8,12 +8,12 @@ var weatherRequest = "https://api.openweathermap.org/data/2.5/onecall?lat=";
 const APIKey = "7d7fd26e34daa0f33590c9e7ba3f4a3f";
 
 var searchBtn = $("#search");
-var currCity = $("#current-city");
-var currIcon = $("#current-icon");
-var currTemp = $("#current-temp");
-var currWind = $("#current-wind");
-var currHumidity = $("#current-humidity");
-var currUVIndex = $("#current-uv");
+var currCityElem = $("#current-city");
+var currIconElem = $("#current-icon");
+var currTempElem = $("#current-temp");
+var currWindElem = $("#current-wind");
+var currHumidityElem = $("#current-humidity");
+var currUVIndexElem = $("#current-uv");
 var previousSearch = $(".city-search");
 var dayCard = $(".days");
 
@@ -44,15 +44,15 @@ searchBtn.on("click", function() {
 // console.log(previousSearch[0].children[4]);
 
 function savePreviousCity() {
-    if (previousSearch[0].children.length < 12) {
+    // if (previousSearch[0].children.length < 12) {
         // create the button and add it under the "city-search"
         var previousCity = $("<button>");
         previousCity.text(city);
         previousCity.addClass("city");
         previousSearch.append(previousCity);
-    } else {
+    // } else {
         
-    }
+    // }
 }
 
 // 
@@ -73,37 +73,18 @@ function getCoordinates(requestURL) {
     });
 }
 
-
-console.log(currIcon);
-
 // Displays the current forecast and the 5-Days forecast
 function displayForecast(daysForecast) {
     var date = new Date();
     var iconUrl = "http://openweathermap.org/img/wn/";
-    console.log(currIcon);
-    console.log(currIcon[0].src);
-    console.log(currIcon[0].alt);
-    currIcon[0].src = iconUrl + currentIcon + ".png";
-    currIcon[0].alt = currentIconAlt;
 
-    currCity.text(city + " (" + date.toLocaleDateString(currentTime) + ") " + currIcon); // + iconUrl + currentIcon + ".png)"); // need to add date and icon *****************************************
-    
-    // These below work but pic won't show up
+    currCityElem.text(city + " (" + date.toLocaleDateString(currentTime) + ") "); // + iconUrl + currentIcon + ".png)");
+    currIconElem; // add in image
+    currTempElem.text("Temp: " + currentTemp + "°F");
+    currWindElem.text("Wind: " + currentWind + " MPH");
+    currHumidityElem.text("Humidity: " + currentHumidity + "%");
+    currUVIndexElem.text(currentUVIndex);
 
-    console.log(currIcon);
-    console.log(currIcon[0].src);
-    console.log(currIcon[0].alt);
-    // currCity[0].children[0].children[0].attributes[0].textContent = iconUrl + currentIcon + ".png";
-    // currCity[0].children[0].children[0].attributes[1].textContent = currentIconAlt;
-    // currCity[0].children[0].children[0].attributes[0].setAttribute("src", iconUrl + currentIcon + ".png");
-    // currCity[0].children[0].children[0].attributes[1].setAttribute("alt", currentIconAlt);
-    currTemp.text("Temp: " + currentTemp + "°F");
-    currWind.text("Wind: " + currentWind + " MPH");
-    currHumidity.text("Humidity: " + currentHumidity + "%");
-    currUVIndex.text(currentUVIndex);
-
-    // console.log(daysForecast[1].weather[0].icon);
-    // console.log(iconUrl + JSON.stringify(daysForecast[1].weather[0].icon) + "@2x.png");
     // Loops through children element of the article and sets the children's element 
     for (let i = 0; i < 5; i++) {
         console.log(dayCard[0].children[i].children[1]);
@@ -129,18 +110,6 @@ function displayForecast(daysForecast) {
     // dayCard[0].children[1].children[2].textContent = "Temp: " + daysForecast[1].temp + "°F";
     // dayCard[0].children[1].children[3].textContent = "Wind: " + daysForecast[1].wind + " MPH";
     // dayCard[0].children[1].children[4].textContent = "Humidity: " + daysForecast[1].humidity + "%";
-
-    // dayCard[0].children[2].children[2].textContent = "Temp: " + daysForecast[2].temp + "°F";
-    // dayCard[0].children[2].children[3].textContent = "Wind: " + daysForecast[2].wind + " MPH";
-    // dayCard[0].children[2].children[4].textContent = "Humidity: " + daysForecast[2].humidity + "%";
-
-    // dayCard[0].children[3].children[2].textContent = "Temp: " + daysForecast[3].temp + "°F";
-    // dayCard[0].children[3].children[3].textContent = "Wind: " + daysForecast[3].wind + " MPH";
-    // dayCard[0].children[3].children[4].textContent = "Humidity: " + daysForecast[3].humidity + "%";
-
-    // dayCard[0].children[4].children[2].textContent = "Temp: " + daysForecast[4].temp + "°F";
-    // dayCard[0].children[4].children[3].textContent = "Wind: " + daysForecast[4].wind + " MPH";
-    // dayCard[0].children[4].children[4].textContent = "Humidity: " + daysForecast[4].humidity + "%";
 
 }
 
