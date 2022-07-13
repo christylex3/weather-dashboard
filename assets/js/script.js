@@ -55,6 +55,15 @@ function getCoordinates(requestURL) {
     });
 }
 
+// var testArticle = $(".days");
+// console.log(testArticle);
+// console.log(testArticle[0].children[0]); // article
+// console.log(testArticle[0].children[0].children[0]); // h4
+var dayCard = $(".days");
+    // dayCard[0].children[0].children[2].text("Temp: " + daysForecast[0].day.temp);
+    // console.log(daysForecast[0].day.temp);
+
+
 function displayForecast(daysForecast) {
     var date = new Date();
     currCity.text(city + " (" + date.toLocaleDateString(currentTime) + ")"); // need to add date and icon *****************************************
@@ -64,7 +73,34 @@ function displayForecast(daysForecast) {
     currUVIndex.text(currentUVIndex);
 
     // make a for-loop to loop the weather cards
-    
+
+    // dayCard[0].children[0].children[0].text(); // this is the date
+    // dayCard[0].children[0].children[1].text(); // this is the icon
+    dayCard[0].children[0].children[2].textContent = "Temp: " + daysForecast[0].temp + "°F";
+    dayCard[0].children[0].children[3].textContent = "Wind: " + daysForecast[0].wind + " MPH";
+    dayCard[0].children[0].children[4].textContent = "Humidity: " + daysForecast[0].humidity + "%";
+
+    dayCard[0].children[1].children[2].textContent = "Temp: " + daysForecast[1].temp + "°F";
+    dayCard[0].children[1].children[3].textContent = "Wind: " + daysForecast[1].wind + " MPH";
+    dayCard[0].children[1].children[4].textContent = "Humidity: " + daysForecast[1].humidity + "%";
+
+    dayCard[0].children[2].children[2].textContent = "Temp: " + daysForecast[2].temp + "°F";
+    dayCard[0].children[2].children[3].textContent = "Wind: " + daysForecast[2].wind + " MPH";
+    dayCard[0].children[2].children[4].textContent = "Humidity: " + daysForecast[2].humidity + "%";
+
+    dayCard[0].children[3].children[2].textContent = "Temp: " + daysForecast[3].temp + "°F";
+    dayCard[0].children[3].children[3].textContent = "Wind: " + daysForecast[3].wind + " MPH";
+    dayCard[0].children[3].children[4].textContent = "Humidity: " + daysForecast[3].humidity + "%";
+
+    dayCard[0].children[4].children[2].textContent = "Temp: " + daysForecast[4].temp + "°F";
+    dayCard[0].children[4].children[3].textContent = "Wind: " + daysForecast[4].wind + " MPH";
+    dayCard[0].children[4].children[4].textContent = "Humidity: " + daysForecast[4].humidity + "%";
+
+    console.log(daysForecast[0].temp);
+
+
+    // for (let i = 0; i < 5; i ++) {
+    // }
 
 }
 
@@ -83,35 +119,21 @@ function getForecast (requestUrl) {
 
         // need to make a for-loop to store data
         var daysForecast = [];
-        for (var i = 0; i < 5; i++) {
+        for (let i = 0; i < 5; i++) {
             var day = {
                 time: data.daily[i].dt,
                 icon: data.daily[i].weather[0].icon,
                 temp: data.daily[i].temp.day,
                 wind: data.daily[i].wind_speed,
                 humidity: data.daily[i].humidity,
-
             }
-            console.log(i + " day array: " + JSON.stringify(day));
+            // console.log(i + " day array: " + JSON.stringify(day));
             daysForecast.push(day);
-            console.log(i + " daysForecast: " + JSON.stringify(daysForecast));
-
+            // console.log(i + " daysForecast: " + JSON.stringify(daysForecast));
         }
         displayForecast(daysForecast);
     });
 }
-
-// function get5DaysForecast (requestUrl) {
-//     fetch(requestUrl).then(function(response) {
-//         return response.json();
-//     }).then(function(data) {
-//         console.log(data);
- 
-//         // display5DaysForecast();
-//     });
-// }
-
-
 
 // TODO:
 // 1) Get city's coords
@@ -119,51 +141,3 @@ function getForecast (requestUrl) {
 // 3) Get city's 5 Day forecast
 // 4) Print out weather info-related appropriately (Temp, Wind, Humidity, UV Index)
 // 5) Set up local storage to store previous searches
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// var city = document.querySelector("#city-input");
-// console.log(city);
-
-// if (searchBtn) {
-//     searchBtn.addEventListener("click", checksInput);
-// }
-
-// // Checks if input is valid, and if so, call OpenWeather API
-// function checksInput (city) {
-//     if (!isNaN(city)) {
-//         return;
-//     } else {
-        
-//         console.log(city);
-
-        // var cityCoordsRequest = coordinatesRequest + city + "&limit=1&appid=" + APIKey;
-        // getCityCoords(cityCoordsRequest);
-        // var cityWeatherRequest = weatherRequest + city;
-//         // getWeather(cityWeatherRequest);
-//     }
-// }
-
-
-
-// function getWeather (requestURL) {
-//     fetch(requestURL).then(function(response) {
-//         console.log(response);
-//         return response.json;
-//     }).then(function(data) {
-//         console.log(data); 
-//     });
-// }
