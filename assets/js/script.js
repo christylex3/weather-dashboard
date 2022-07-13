@@ -4,6 +4,9 @@ var coordinatesRequest = "http://api.openweathermap.org/geo/1.0/direct?q=";
 // One Call API
 var weatherRequest = "https://api.openweathermap.org/data/2.5/onecall?lat=";
 
+// Daily Forecast 16 Days
+// var forecastRequest = "https://api.openweathermap.org/data/2.5/forecast/daily?lat=";
+
 // API Key for both APIs
 const APIKey = "7d7fd26e34daa0f33590c9e7ba3f4a3f";
 
@@ -30,6 +33,7 @@ searchBtn.on("click", function() {
         return;
     } else {
         getCurrentWeather();
+        // get5DaysForecast();
     }
 });
 
@@ -40,13 +44,13 @@ function getCurrentWeather() {
 }
 
 function displayCurrentWeather() {
-    currCity.text(city); // need to add date and icon *****************************************
+    var date = new Date();
+    currCity.text(city + " (" + date.toLocaleDateString(currentTime) + ")"); // need to add date and icon *****************************************
     currTemp.text("Temp: " + currentTemp + "°F");
     currWind.text("Wind: " + currentWind);
     currHumidity.text("Humidity: " + currentHumidity + "%");
     currUVIndex.text(currentUVIndex);
 }
-
 
 // API call to Geocoding - grabs city's latitude and longitude
 function getCoordinates(requestURL) {
@@ -56,13 +60,13 @@ function getCoordinates(requestURL) {
         latitude = data[0].lat;
         longitude = data[0].lon;
         var requestUrl = weatherRequest + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + APIKey; 
-        getDayForecast(requestUrl);
+        getCurrentForecast(requestUrl);
     });
 }
 
 // API Call to One Call API - grabs weather forecast for current day
-function getDayForecast (requestURL) {
-    fetch(requestURL).then(function(response) {
+function getCurrentForecast (requestUrl) {
+    fetch(requestUrl).then(function(response) {
         return response.json();
     }).then(function(data) {
         console.log(data);
@@ -72,9 +76,32 @@ function getDayForecast (requestURL) {
         currentWind = data.current.wind_speed;
         currentHumidity = data.current.humidity;
         currentUVIndex = data.current.uvi;
+
+        day1Time = data.daily[1].dt;
+        day1Icon = data.daily[1].weather[0].icon;
+        day1Temp = data.daily[1].temp;
+        day1Wind = data.daily[1].wind_speed;
+        day1Humidity = data.daily[1].humidity;
+
+        day2Time = data.daily[2].dt;
+        day2Icon = data.daily[2].weather[0].icon;
+        day2Temp = data.daily[2].temp;
+        day2Wind = data.daily[2].wind_speed;
+        day2Humidity = data.daily[2].humidity;
+
         displayCurrentWeather();
     });
 }
+
+// function get5DaysForecast (requestUrl) {
+//     fetch(requestUrl).then(function(response) {
+//         return response.json();
+//     }).then(function(data) {
+//         console.log(data);
+ 
+//         // display5DaysForecast();
+//     });
+// }
 
 
 
