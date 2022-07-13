@@ -43,15 +43,6 @@ function getCurrentWeather() {
     getCoordinates(requestUrl);
 }
 
-function displayCurrentWeather() {
-    var date = new Date();
-    currCity.text(city + " (" + date.toLocaleDateString(currentTime) + ")"); // need to add date and icon *****************************************
-    currTemp.text("Temp: " + currentTemp + "°F");
-    currWind.text("Wind: " + currentWind);
-    currHumidity.text("Humidity: " + currentHumidity + "%");
-    currUVIndex.text(currentUVIndex);
-}
-
 // API call to Geocoding - grabs city's latitude and longitude
 function getCoordinates(requestURL) {
     fetch(requestURL).then(function(response) {
@@ -60,12 +51,24 @@ function getCoordinates(requestURL) {
         latitude = data[0].lat;
         longitude = data[0].lon;
         var requestUrl = weatherRequest + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + APIKey; 
-        getCurrentForecast(requestUrl);
+        getForecast(requestUrl);
     });
 }
 
+function displayForecast() {
+    var date = new Date();
+    currCity.text(city + " (" + date.toLocaleDateString(currentTime) + ")"); // need to add date and icon *****************************************
+    currTemp.text("Temp: " + currentTemp + "°F");
+    currWind.text("Wind: " + currentWind);
+    currHumidity.text("Humidity: " + currentHumidity + "%");
+    currUVIndex.text(currentUVIndex);
+
+    // make a for-loop to loop the weather cards
+
+}
+
 // API Call to One Call API - grabs weather forecast for current day
-function getCurrentForecast (requestUrl) {
+function getForecast (requestUrl) {
     fetch(requestUrl).then(function(response) {
         return response.json();
     }).then(function(data) {
@@ -76,6 +79,8 @@ function getCurrentForecast (requestUrl) {
         currentWind = data.current.wind_speed;
         currentHumidity = data.current.humidity;
         currentUVIndex = data.current.uvi;
+
+        // need to make a for-loop to store data
 
         day1Time = data.daily[1].dt;
         day1Icon = data.daily[1].weather[0].icon;
@@ -89,7 +94,7 @@ function getCurrentForecast (requestUrl) {
         day2Wind = data.daily[2].wind_speed;
         day2Humidity = data.daily[2].humidity;
 
-        displayCurrentWeather();
+        displayForecast();
     });
 }
 
