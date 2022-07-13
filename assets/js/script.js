@@ -20,13 +20,6 @@ var dayCard = $(".days");
 var city;
 var latitude;
 var longitude;
-var currentIcon;
-var currentIconAlt;
-var currentTemp;
-var currentWind;
-var currentHumidity;
-var currentUVIndex;
-var currentWeatherIcon;
 
 // Grabs the value from the input when search button is clicked
 searchBtn.on("click", function() {
@@ -74,16 +67,17 @@ function getCoordinates(requestURL) {
 }
 
 // Displays the current forecast and the 5-Days forecast
-function displayForecast(daysForecast) {
+function displayForecast(currentWeather, daysForecast) {
     var date = new Date();
     var iconUrl = "http://openweathermap.org/img/wn/";
 
-    currCityElem.text(city + " (" + date.toLocaleDateString(currentTime) + ") "); // + iconUrl + currentIcon + ".png)");
+    // Displays current forecast
+    currCityElem.text(city + " (" + date.toLocaleDateString(currentWeather.time) + ") "); // + iconUrl + currentIcon + ".png)");
     currIconElem; // add in image
-    currTempElem.text("Temp: " + currentTemp + "°F");
-    currWindElem.text("Wind: " + currentWind + " MPH");
-    currHumidityElem.text("Humidity: " + currentHumidity + "%");
-    currUVIndexElem.text(currentUVIndex);
+    currTempElem.text("Temp: " + currentWeather.temp + "°F");
+    currWindElem.text("Wind: " + currentWeather.wind + " MPH");
+    currHumidityElem.text("Humidity: " + currentWeather.humidity + "%");
+    currUVIndexElem.text(currentWeather.uv);
 
     // Loops through children element of the article and sets the children's element 
     for (let i = 0; i < 5; i++) {
@@ -94,14 +88,6 @@ function displayForecast(daysForecast) {
         dayCard[0].children[i].children[3].textContent = "Wind: " + daysForecast[i].wind + " MPH";
         dayCard[0].children[i].children[4].textContent = "Humidity: " + daysForecast[i].humidity + "%";
     }
-
-    // var testArticle = $(".days");
-    // console.log(testArticle);
-    // console.log(testArticle[0].children[0]); // article
-    // console.log(testArticle[0].children[0].children[0]); // h4
-
-    // dayCard[0].children[0].children[0].text(); // this is the date
-    // dayCard[0].children[0].children[1].text(); // this is the icon
 
     // dayCard[0].children[0].children[2].textContent = "Temp: " + daysForecast[0].temp + "°F";
     // dayCard[0].children[0].children[3].textContent = "Wind: " + daysForecast[0].wind + " MPH";
@@ -118,16 +104,19 @@ function getForecast (requestUrl) {
     fetch(requestUrl).then(function(response) {
         return response.json();
     }).then(function(data) {
-        console.log(data);
-        currentTime = data.current.dt;
-        currentIcon = data.current.weather[0].icon;
-        currentIconAlt = data.current.weather[0].description;
-        currentTemp = data.current.temp;
-        currentWind = data.current.wind_speed;
-        currentHumidity = data.current.humidity;
-        currentUVIndex = data.current.uvi;
 
-        // need to make a for-loop to store data
+        // Stores current weather data in an object
+        var currentWeather = {
+            time: data.current.dt,
+            icon: data.current.weather[0].icon,
+            iconAlt: data.current.weather[0].description,
+            temp: data.current.temp,
+            wind: data.current.wind_speed,
+            humidity: data.current.humidity,
+            uv: data.current.uvi,
+        }
+
+        // Makes new array to store the 5 Days' Forecast
         var daysForecast = [];
         for (let i = 0; i < 5; i++) {
             var day = {
@@ -142,7 +131,7 @@ function getForecast (requestUrl) {
             daysForecast.push(day);
             // console.log(i + " daysForecast: " + JSON.stringify(daysForecast));
         }
-        displayForecast(daysForecast);
+        displayForecast(currentWeather, daysForecast);
     });
 }
 
@@ -151,4 +140,5 @@ function getForecast (requestUrl) {
 // 2) Get city's current weather
 // 3) Get city's 5 Day forecast
 // 4) Print out weather info-related appropriately (Temp, Wind, Humidity, UV Index)
-// 5) Set up local storage to store previous searches
+// 5) Fix UV scale
+// 6) Set up local storage to store previous searches
