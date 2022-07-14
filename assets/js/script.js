@@ -18,6 +18,7 @@ var currWindElem = $("#current-wind");
 var currHumidityElem = $("#current-humidity");
 var currUVIndexElem = $("#current-uv");
 var previousSearch = $(".city-search");
+var uvLabel = $("label");
 var dayCard = $(".days");
 
 var city;
@@ -51,6 +52,8 @@ function savePreviousCity() {
     // }
 }
 
+// console.log(currUVIndexElem[0].style.backgroundColor = "#e4d507");
+
 // 
 function getCurrentWeather() {
     var requestUrl = coordinatesRequest + city + "&limit=1&appid=" + APIKey;
@@ -67,6 +70,20 @@ function getCoordinates(requestURL) {
         var requestUrl = weatherRequest + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + APIKey; 
         getForecast(requestUrl);
     });
+}
+
+function displayUVScale (currentWeather) {
+    if (currentWeather.uv < 3) {
+        currUVIndexElem[0].style.backgroundColor = "#199b40"; // green
+    } else if (3 <= currentWeather.uv < 6 ) {
+        currUVIndexElem[0].style.backgroundColor = "#e4d507"; // yellow
+    } else if (6 <= currentWeather.uv < 8) {
+        currUVIndexElem[0].style.backgroundColor = "#e47d07"; // orange
+    } else if (8 <= currentWeather.uv < 11) {
+        currUVIndexElem[0].style.backgroundColor = "#e47d07"; // red
+    } else {
+        currUVIndexElem[0].style.backgroundColor = "#8c07e4"; // purple
+    }
 }
 
 // Displays the current forecast and the 5-Days forecast
@@ -93,6 +110,8 @@ function displayForecast(currentWeather, daysForecast) {
         dayCard[0].children[i].children[3].textContent = "Wind: " + daysForecast[i].wind + " MPH";
         dayCard[0].children[i].children[4].textContent = "Humidity: " + daysForecast[i].humidity + "%";
     }
+
+    displayUVScale(currentWeather);
 }
 
 // API Call to One Call API - grabs weather forecast for current day
@@ -138,4 +157,5 @@ function getForecast (requestUrl) {
 // 4) Print out weather info-related appropriately (Temp, Wind, Humidity, UV Index)
 // 5) Fix the dates
 // 6) Fix UV scale
-// 7) Set up local storage to store previous searches
+// 7) Set up old searches button
+// 8) Set up local storage to store previous searches
