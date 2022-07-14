@@ -17,7 +17,7 @@ var currTempElem = $("#current-temp");
 var currWindElem = $("#current-wind");
 var currHumidityElem = $("#current-humidity");
 var currUVIndexElem = $("#current-uv");
-var previousSearch = $(".city-search");
+var previousSearch = $(".previous-search");
 var uvLabel = $("label");
 var dayCard = $(".days");
 
@@ -74,15 +74,15 @@ function getCoordinates(requestURL) {
 
 function displayUVScale (currentWeather) {
     if (currentWeather.uv < 3) {
-        currUVIndexElem[0].style.backgroundColor = "#199b40"; // green
+        currUVIndexElem[0].style.backgroundColor = "#199b40"; // green - low
     } else if (3 <= currentWeather.uv < 6 ) {
-        currUVIndexElem[0].style.backgroundColor = "#e4d507"; // yellow
+        currUVIndexElem[0].style.backgroundColor = "#e4d507"; // yellow - moderate
     } else if (6 <= currentWeather.uv < 8) {
-        currUVIndexElem[0].style.backgroundColor = "#e47d07"; // orange
+        currUVIndexElem[0].style.backgroundColor = "#e47d07"; // orange - high
     } else if (8 <= currentWeather.uv < 11) {
-        currUVIndexElem[0].style.backgroundColor = "#e47d07"; // red
+        currUVIndexElem[0].style.backgroundColor = "#e47d07"; // red - very high
     } else {
-        currUVIndexElem[0].style.backgroundColor = "#8c07e4"; // purple
+        currUVIndexElem[0].style.backgroundColor = "#8c07e4"; // purple - extreme
     }
 }
 
