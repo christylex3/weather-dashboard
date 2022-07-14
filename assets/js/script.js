@@ -24,7 +24,8 @@ var dayCard = $(".days");
 var city;
 var latitude;
 var longitude;
-var savedCities;
+var savedCity;
+var savedCities = [];
 
 // Grabs the value from the input when search button is clicked
 searchBtn.on("click", function() {
@@ -33,45 +34,48 @@ searchBtn.on("click", function() {
         $("#city-input")[0].attributes[2].textContent = "Please enter a valid city";
         return;
     } else {
-        createPreviousSearch();
+        savePreviousSearch(city);
         getCurrentWeather();
     }
 });
 
-// Shows previous searches of cities
-function createPreviousSearch() {
 
-    // If there are less than 8 old searches, create new button
-    // Else, remove the oldest search and create new button
-    if (previousSearch[0].children.length < 8) {
-        var previousCity = $("<button>");
-        previousCity.text(city);
-        previousCity.addClass("city");
-        previousSearch.append(previousCity);
-    } else {
-        var previousCity = $("<button>");
-        previousCity.text(city);
-        previousCity.addClass("city");
-        previousSearch.append(previousCity);
-        previousSearch[0].children[0].remove();
+// Grabs previously searched cities and displays them back in the search history
+function getPreviousSearch() {
+
+    // Grab cities that were previously searched
+    var savedCities = JSON.parse(localStorage.getItem("city"));
+
+    // If there is nothing in the localStorage, return
+    if (savedCities === null) {
+        return;
     }
 
-    savePreviousSearch(previousCity);
+    // Loops through the localStorage to make a button for each saved city
+    // then appends the buttons back to previous search section
+    for (let i = 0; i < savedCities.length; i++) {
+        var savedCity = $("<button>");
+        savedCity.text(savedCities[i]);
+        savedCity.addClass("city");
+        previousSearch.append(savedCity);
+    }
 }
 
-function savePreviousSearch (previousCity) {
+// Saves previous searches of cities
+function savePreviousSearch(city) {
 
-    // take previousCity and save into array
-    // locasltorage array ?
-    savedCities.push(previousCity);
+    // Makes a button, add city's name to button, add class to button, and append button
+    var previousCity = $("<button>");
+    previousCity.text(city);
+    previousCity.addClass("city");
+    previousSearch.append(previousCity);
 
-
-    previousCity.on("click", function() {
-
-    });
+    // Saves the city into the array, savedCities, and then add that array in the localStorage
+    savedCities.push(city);
+    localStorage.setItem("city", JSON.stringify(savedCities));
 }
 
-// 
+// Makes a requestUrl to get city's coordinates
 function getCurrentWeather() {
     var requestUrl = coordinatesRequest + city + "&limit=1&appid=" + APIKey;
     getCoordinates(requestUrl);
@@ -84,11 +88,15 @@ function getCoordinates(requestURL) {
     }).then(function(data) {
         latitude = data[0].lat;
         longitude = data[0].lon;
+
+        // Makes a requestUrl ready to call an API that can give forecast info
         var requestUrl = weatherRequest + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + APIKey; 
         getForecast(requestUrl);
     });
 }
 
+// Displays the scale of UV index
+// Each color informs a different level
 function displayUVScale (currentWeather) {
     if (currentWeather.uv < 3) {
         currUVIndexElem[0].style.backgroundColor = "#199b40"; // green - low
@@ -127,7 +135,6 @@ function displayForecast(currentWeather, daysForecast) {
         dayCard[0].children[i].children[3].textContent = "Wind: " + daysForecast[i].wind + " MPH";
         dayCard[0].children[i].children[4].textContent = "Humidity: " + daysForecast[i].humidity + "%";
     }
-
     displayUVScale(currentWeather);
 }
 
@@ -137,7 +144,7 @@ function getForecast (requestUrl) {
         return response.json();
     }).then(function(data) {
 
-        // Stores current weather data in an object
+        // Stores current weather data (time, weather icon and alt, temperature, wind, humidity, AND UV index) in an object
         var currentWeather = {
             time: data.current.dt,
             icon: data.current.weather[0].icon,
@@ -149,6 +156,7 @@ function getForecast (requestUrl) {
         }
 
         // Makes new array to store the 5 Days' Forecast
+        // Each index of the array contains a day's forecast info (time, weather icon and alt, temperature, wind, and humidity)
         var daysForecast = [];
         for (let i = 0; i < 5; i++) {
             var day = {
@@ -159,13 +167,14 @@ function getForecast (requestUrl) {
                 wind: data.daily[i].wind_speed,
                 humidity: data.daily[i].humidity,
             }
-            // console.log(i + " day array: " + JSON.stringify(day));
             daysForecast.push(day);
-            // console.log(i + " daysForecast: " + JSON.stringify(daysForecast));
         }
         displayForecast(currentWeather, daysForecast);
     });
 }
+
+// Calls the following function
+getPreviousSearch();
 
 // TODO:
 // 1) Get city's coords
@@ -176,3 +185,4 @@ function getForecast (requestUrl) {
 // 6) Fix UV scale
 // 7) Set up old searches button
 // 8) Set up local storage to store previous searches
+// 9) Now add functions to previous search button
