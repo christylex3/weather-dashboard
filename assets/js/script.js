@@ -36,23 +36,21 @@ searchBtn.on("click", function() {
     }
 });
 
-// console.log(previousSearch);
-// console.log(previousSearch[0].children);
-// console.log(previousSearch[0].children[4]);
-
+// 
 function savePreviousCity() {
-    // if (previousSearch[0].children.length < 12) {
-        // create the button and add it under the "city-search"
+    if (previousSearch[0].children.length < 8) {
         var previousCity = $("<button>");
         previousCity.text(city);
         previousCity.addClass("city");
         previousSearch.append(previousCity);
-    // } else {
-        
-    // }
+    } else {
+        var previousCity = $("<button>");
+        previousCity.text(city);
+        previousCity.addClass("city");
+        previousSearch.append(previousCity);
+        previousSearch[0].children[0].remove();
+    }
 }
-
-// console.log(currUVIndexElem[0].style.backgroundColor = "#e4d507");
 
 // 
 function getCurrentWeather() {

@@ -80,6 +80,11 @@ p {
     font-size: 1.2rem;
 }
 
+.previous-search {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
 .forecast {
     display: flex;
     flex-direction: column;
