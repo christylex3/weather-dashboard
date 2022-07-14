@@ -24,20 +24,25 @@ var dayCard = $(".days");
 var city;
 var latitude;
 var longitude;
+var savedCities;
 
 // Grabs the value from the input when search button is clicked
 searchBtn.on("click", function() {
     city = $("#city-input").val();
     if (!isNaN(city)) {
+        $("#city-input")[0].attributes[2].textContent = "Please enter a valid city";
         return;
     } else {
-        savePreviousCity();
+        createPreviousSearch();
         getCurrentWeather();
     }
 });
 
-// 
-function savePreviousCity() {
+// Shows previous searches of cities
+function createPreviousSearch() {
+
+    // If there are less than 8 old searches, create new button
+    // Else, remove the oldest search and create new button
     if (previousSearch[0].children.length < 8) {
         var previousCity = $("<button>");
         previousCity.text(city);
@@ -50,6 +55,20 @@ function savePreviousCity() {
         previousSearch.append(previousCity);
         previousSearch[0].children[0].remove();
     }
+
+    savePreviousSearch(previousCity);
+}
+
+function savePreviousSearch (previousCity) {
+
+    // take previousCity and save into array
+    // locasltorage array ?
+    savedCities.push(previousCity);
+
+
+    previousCity.on("click", function() {
+
+    });
 }
 
 // 
