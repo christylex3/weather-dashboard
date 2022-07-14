@@ -4,7 +4,7 @@ var coordinatesRequest = "http://api.openweathermap.org/geo/1.0/direct?q=";
 // One Call API
 var weatherRequest = "https://api.openweathermap.org/data/2.5/onecall?lat=";
 
-// OpenWeather icon
+// OpenWeather icon's URL
 var iconUrl = "http://openweathermap.org/img/wn/";
 
 // API Key for both APIs
@@ -71,10 +71,10 @@ function getCoordinates(requestURL) {
 
 // Displays the current forecast and the 5-Days forecast
 function displayForecast(currentWeather, daysForecast) {
-    var date = new Date();
+    var currentDay = new Date();
 
     // Displays current forecast - city, weather icon and its alt, temp, wind, humidity, and UV index
-    currCityElem.text(city + " (" + date.toLocaleDateString(currentWeather.time) + ") ");
+    currCityElem.text(city + " (" + currentDay.toLocaleDateString(currentWeather.time) + ") ");
     currIconElem[0].attributes[1].textContent = iconUrl + currentWeather.icon + ".png";
     currIconElem[0].attributes[2].textContent = currentWeather.iconAlt;
     currTempElem.text("Temp: " + currentWeather.temp + "°F");
@@ -82,24 +82,17 @@ function displayForecast(currentWeather, daysForecast) {
     currHumidityElem.text("Humidity: " + currentWeather.humidity + "%");
     currUVIndexElem.text(currentWeather.uv);
 
-    // Loops through children element of the article and sets the children's element 
+    // Loops through each dayCard to display date, weather icon and its alt, temperature, wind, and humidity
+    var nextDay = new Date(currentDay);
     for (let i = 0; i < 5; i++) {
-        console.log(dayCard[0].children[i].children[1]);
+        nextDay.setDate(nextDay.getDate() + 1);
+        dayCard[0].children[i].children[0].textContent = nextDay.toLocaleDateString();
         dayCard[0].children[i].children[1].setAttribute("src", iconUrl + daysForecast[i].icon + ".png");
         dayCard[0].children[i].children[1].setAttribute("alt", daysForecast[i].iconAlt);
         dayCard[0].children[i].children[2].textContent = "Temp: " + daysForecast[i].temp + "°F";
         dayCard[0].children[i].children[3].textContent = "Wind: " + daysForecast[i].wind + " MPH";
         dayCard[0].children[i].children[4].textContent = "Humidity: " + daysForecast[i].humidity + "%";
     }
-
-    // dayCard[0].children[0].children[2].textContent = "Temp: " + daysForecast[0].temp + "°F";
-    // dayCard[0].children[0].children[3].textContent = "Wind: " + daysForecast[0].wind + " MPH";
-    // dayCard[0].children[0].children[4].textContent = "Humidity: " + daysForecast[0].humidity + "%";
-
-    // dayCard[0].children[1].children[2].textContent = "Temp: " + daysForecast[1].temp + "°F";
-    // dayCard[0].children[1].children[3].textContent = "Wind: " + daysForecast[1].wind + " MPH";
-    // dayCard[0].children[1].children[4].textContent = "Humidity: " + daysForecast[1].humidity + "%";
-
 }
 
 // API Call to One Call API - grabs weather forecast for current day
