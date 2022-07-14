@@ -11,6 +11,7 @@ var iconUrl = "http://openweathermap.org/img/wn/";
 const APIKey = "7d7fd26e34daa0f33590c9e7ba3f4a3f";
 
 var searchBtn = $("#search");
+var cityBtn = $(".city");
 var currCityElem = $("#current-city");
 var currIconElem = $("#current-icon");
 var currTempElem = $("#current-temp");
@@ -25,7 +26,6 @@ var city;
 var latitude;
 var longitude;
 var savedCity;
-var savedCities = [];
 
 // Grabs the value from the input when search button is clicked
 searchBtn.on("click", function() {
@@ -39,6 +39,12 @@ searchBtn.on("click", function() {
     }
 });
 
+// Brings up city's current and future conditions
+cityBtn.on("click", function() {
+    console.log("hello");
+    this.event.name;
+    console.log(this.event.name);
+});
 
 // Grabs previously searched cities and displays them back in the search history
 function getPreviousSearch() {
@@ -48,6 +54,7 @@ function getPreviousSearch() {
 
     // If there is nothing in the localStorage, return
     if (savedCities === null) {
+        savedCities = [];
         return;
     }
 
@@ -69,6 +76,13 @@ function savePreviousSearch(city) {
     previousCity.text(city);
     previousCity.addClass("city");
     previousSearch.append(previousCity);
+
+    // Grabs
+    var savedCities = JSON.parse(localStorage.getItem("city"));
+
+    if (savedCities === null) {
+        savedCities = [];
+    }
 
     // Saves the city into the array, savedCities, and then add that array in the localStorage
     savedCities.push(city);
