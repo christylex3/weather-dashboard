@@ -10,7 +10,7 @@ How to use the weather dashboard:
 
 ## Usage
 Click [here](https://christylex3.github.io/weather-dashboard/) to try out the weather dashboard to help plan your trips!
-> Note: If API requests are blocked, you are welcome to `git clone` the [respository](https://github.com/christylex3/weather-dashboard).
+> Note: If API requests are blocked, you are welcome to `git clone` the [repository](https://github.com/christylex3/weather-dashboard).
 
 ## Additional Pictures
 Figure 1: Here is how the application looks when launched.
