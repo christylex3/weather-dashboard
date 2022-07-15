@@ -11,7 +11,6 @@ var iconUrl = "http://openweathermap.org/img/wn/";
 const APIKey = "7d7fd26e34daa0f33590c9e7ba3f4a3f";
 
 var searchBtn = $("#search");
-var cityBtn = $(".city");
 var currCityElem = $("#current-city");
 var currIconElem = $("#current-icon");
 var currTempElem = $("#current-temp");
@@ -27,7 +26,7 @@ var latitude;
 var longitude;
 var savedCity;
 
-// Grabs the value from the input when search button is clicked
+// When clicked, displays the city's current and future conditions
 searchBtn.on("click", function() {
     city = $("#city-input").val();
     if (!isNaN(city)) {
@@ -39,11 +38,11 @@ searchBtn.on("click", function() {
     }
 });
 
-// Brings up city's current and future conditions
-cityBtn.on("click", function() {
-    console.log("hello");
-    this.event.name;
-    console.log(this.event.name);
+// When clicked, displays a previously-searched city's current and future conditions
+previousSearch.on("click", ".city", function() {
+    city = $(this)[0].textContent;
+    savePreviousSearch(city);
+    getCurrentWeather();
 });
 
 // Grabs previously searched cities and displays them back in the search history
@@ -52,7 +51,7 @@ function getPreviousSearch() {
     // Grab cities that were previously searched
     var savedCities = JSON.parse(localStorage.getItem("city"));
 
-    // If there is nothing in the localStorage, return
+    // If there is nothing in the localStorage, create new array
     if (savedCities === null) {
         savedCities = [];
         return;
@@ -77,7 +76,7 @@ function savePreviousSearch(city) {
     previousCity.addClass("city");
     previousSearch.append(previousCity);
 
-    // Grabs
+    // Grab cities that were previously searched
     var savedCities = JSON.parse(localStorage.getItem("city"));
 
     if (savedCities === null) {
@@ -189,14 +188,3 @@ function getForecast (requestUrl) {
 
 // Calls the following function
 getPreviousSearch();
-
-// TODO:
-// 1) Get city's coords
-// 2) Get city's current weather
-// 3) Get city's 5 Day forecast
-// 4) Print out weather info-related appropriately (Temp, Wind, Humidity, UV Index)
-// 5) Fix the dates
-// 6) Fix UV scale
-// 7) Set up old searches button
-// 8) Set up local storage to store previous searches
-// 9) Now add functions to previous search button
