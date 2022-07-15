@@ -1,11 +1,11 @@
 // Geocoding API
-var coordinatesRequest = "http://api.openweathermap.org/geo/1.0/direct?q=";
+var coordinatesRequest = "https://api.openweathermap.org/geo/1.0/direct?q=";
 
 // One Call API
 var weatherRequest = "https://api.openweathermap.org/data/2.5/onecall?lat=";
 
 // OpenWeather icon's URL
-var iconUrl = "http://openweathermap.org/img/wn/";
+var iconUrl = "https://openweathermap.org/img/wn/";
 
 // API Key for both APIs
 const APIKey = "7d7fd26e34daa0f33590c9e7ba3f4a3f";
